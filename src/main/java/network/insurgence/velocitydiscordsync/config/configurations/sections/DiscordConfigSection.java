@@ -11,7 +11,13 @@ public class DiscordConfigSection {
     @Comment("The Discord Bot token, KEEP THIS PRIVATE!")
     @Nullable private String token;
 
+    @Nullable private String channel;
+
     public @Nullable String getToken() {
         return token;
+    }
+
+    public @Nullable String getTokenChannel() {
+        return channel;
     }
 }

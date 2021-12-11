@@ -2,8 +2,8 @@
 
 discord:
   token: 'PUT_TOKEN_HERE'
-  prefix: '!'
-  owner: 'PUT_OWNER_ID_HERE'
+  channel: 'PUT_CHANNEL_ID_HERE'
 
-settings:
-  nigger: 'yes'
+lang:
+  grant: "&aYour code is &2&n{code}&a send this in the verification channel! &7(/discord)"
+  nospam: "&cYou can only get one code every &210&c minutes!"

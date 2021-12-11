@@ -2,6 +2,7 @@ package network.insurgence.velocitydiscordsync.config.configurations;
 
 
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DiscordConfigSection;
+import network.insurgence.velocitydiscordsync.config.configurations.sections.LanguageConfigSection;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 
@@ -12,9 +13,13 @@ public class MainConfig {
     private DiscordConfigSection discord;
 
 
-    @Comment("you're a nigger")
-    private String test = "ngiger";
+    @Comment("Language shit")
+    private LanguageConfigSection lang;
 
+
+    public LanguageConfigSection getLang() {
+        return lang;
+    }
 
     public DiscordConfigSection getDiscordSection() {
         return discord;
