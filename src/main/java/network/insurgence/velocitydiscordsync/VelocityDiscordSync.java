@@ -28,7 +28,6 @@ public class VelocityDiscordSync {
     public void onProxyInitialization(ProxyInitializeEvent event) {
 
         new SyncBot(ConfigKeys.DISCORD_TOKEN.get(String.class));
-
         logger.info("VelocityDiscordSync has been enabled!");
     }
 }
