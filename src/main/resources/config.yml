@@ -1,0 +1,9 @@
+
+
+discord:
+  token: 'PUT_TOKEN_HERE'
+  prefix: '!'
+  owner: 'PUT_OWNER_ID_HERE'
+
+settings:
+  nigger: 'yes'

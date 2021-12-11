@@ -1,9 +1,11 @@
 package network.insurgence.velocitydiscordsync.commands;
 
+import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.SimpleCommand;
 import network.insurgence.velocitydiscordsync.config.Config;
+import network.insurgence.velocitydiscordsync.core.AbstractCommand;
 
-public class ReloadCommand implements SimpleCommand {
+public class ReloadCommand extends AbstractCommand {
 
     /**
      * Reloading VelocityDiscordSync's configuration
@@ -12,5 +14,10 @@ public class ReloadCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         Config.getInstance().reloadConfig();
+    }
+
+    @Override
+    public CommandMeta getMeta() {
+        return getBuilder("reload").build();
     }
 }
