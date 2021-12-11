@@ -6,7 +6,6 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import network.insurgence.velocitydiscordsync.bot.SyncBot;
-import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.config.ConfigKeys;
 import org.slf4j.Logger;
 

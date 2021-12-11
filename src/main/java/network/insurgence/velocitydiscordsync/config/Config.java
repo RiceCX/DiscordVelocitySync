@@ -41,12 +41,17 @@ public class Config {
         try {
             root = loader.load();
         } catch (ConfigurateException e) {
-            logger.error("An error occured while loading this configuration: " + e.getMessage());
+            logger.error("An error occurred while loading this configuration: " + e.getMessage());
             if(e.getCause() != null) {
                 logger.error("Caused by: " + e.getCause().getMessage());
             }
             e.printStackTrace();
         }
+    }
+
+
+    public void reloadConfig() {
+        loadConfig();
     }
 
     public CommentedConfigurationNode getRoot() {
