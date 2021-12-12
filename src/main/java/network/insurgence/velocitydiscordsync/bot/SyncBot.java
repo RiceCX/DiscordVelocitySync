@@ -12,7 +12,6 @@ import javax.security.auth.login.LoginException;
 
 public class SyncBot {
 
-
     private static JDA instance;
     private final Logger logger = VelocityDiscordSync.getLogger();
 
@@ -52,6 +51,4 @@ public class SyncBot {
     public static JDA getInstance() {
         return instance;
     }
-
-
 }

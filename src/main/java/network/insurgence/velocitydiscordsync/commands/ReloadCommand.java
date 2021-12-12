@@ -1,7 +1,6 @@
 package network.insurgence.velocitydiscordsync.commands;
 
 import com.velocitypowered.api.command.CommandMeta;
-import com.velocitypowered.api.command.SimpleCommand;
 import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.AbstractCommand;
 

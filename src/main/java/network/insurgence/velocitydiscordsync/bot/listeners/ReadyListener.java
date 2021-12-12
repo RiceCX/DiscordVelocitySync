@@ -1,7 +1,5 @@
 package network.insurgence.velocitydiscordsync.bot.listeners;
 
-
-import com.google.inject.Inject;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;

@@ -1,6 +1,5 @@
 package network.insurgence.velocitydiscordsync.config.configurations;
 
-
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DiscordConfigSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.LanguageConfigSection;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;

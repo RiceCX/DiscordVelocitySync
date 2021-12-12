@@ -1,7 +1,6 @@
 package network.insurgence.velocitydiscordsync.config;
 
 import com.google.inject.Inject;
-import com.sun.tools.javac.Main;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
 import network.insurgence.velocitydiscordsync.config.configurations.MainConfig;
 import org.slf4j.Logger;
@@ -61,7 +60,6 @@ public class Config {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Generate config folder and file if they don't exist.

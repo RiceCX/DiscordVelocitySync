@@ -6,7 +6,6 @@ import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
 
 public abstract class AbstractCommand implements SimpleCommand {
 
-
     protected CommandMeta.Builder getBuilder(String alias) {
         return VelocityDiscordSync.getInstance().getServer().getCommandManager().metaBuilder(alias);
     }

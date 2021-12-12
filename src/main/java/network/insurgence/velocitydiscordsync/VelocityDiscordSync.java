@@ -61,7 +61,6 @@ public class VelocityDiscordSync {
         return instance;
     }
 
-
     public ProxyServer getServer() {
         return server;
     }
