@@ -22,17 +22,23 @@ public class LinkCommand extends AbstractCommand {
         if (invocation.source() instanceof Player player) {
             TokenHandler.TokenError canGen = TokenHandler.canGenerate(player.getUniqueId());
             if (canGen != null) {
-                String nospamLang = Config.get().getLang().getNospam();
-                if(canGen == TokenHandler.TokenError.ALREADY_LINKED) {
-                    if (nospamLang == null) nospamLang = "&cYou are already linked with an account!";
-                } else {
-                    if (nospamLang == null) nospamLang = "&cYou can only get one code every &210&c minutes!";
-                }
+                String errorMessage = "&cYou can only get one code every &210&c minutes!";
 
-                TextComponent nospamComp = LegacyComponentSerializer.legacy('&').deserialize(nospamLang);
-                player.sendMessage(nospamComp);
+                if(canGen == TokenHandler.TokenError.ALREADY_LINKED) {
+                    if(Config.get().getLang().getAlreadylinked() != null)
+                        errorMessage = Config.get().getLang().getAlreadylinked();
+                } else {
+
+                    if(Config.get().getLang().getNospam() != null) errorMessage = Config.get().getLang().getNospam();
+                }
+                // I dont get why this should be here...
+                if(errorMessage == null) errorMessage = "&cYou can only get one code every &210&c minutes!";
+
+                TextComponent errorComponent = LegacyComponentSerializer.legacy('&').deserialize(errorMessage);
+                player.sendMessage(errorComponent);
                 return;
             }
+
             String tokenLang = Config.get().getLang().getTokenGrant();
             String token = Objects.requireNonNull(TokenHandler.generate(player.getUniqueId())).getToken();
             String tokenMessage;
@@ -41,6 +47,7 @@ public class LinkCommand extends AbstractCommand {
 
             TextComponent txtComponent = LegacyComponentSerializer.legacy('&').deserialize(tokenMessage);
             player.sendMessage(txtComponent);
+
         } else {
             invocation.source().sendMessage(Component.text("You must be a player to use this command."));
         }

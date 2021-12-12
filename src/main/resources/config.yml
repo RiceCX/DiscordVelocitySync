@@ -7,6 +7,7 @@ discord:
 lang:
   grant: "&aYour code is &2&n{code}&a send this in the verification channel! &7(/discord)"
   nospam: "&cYou can only get one code every &210&c minutes!"
+  alreadylinked: "&cYou already have a code linked to your Discord account!"
 
 database:
   user: 'PUT_USER_HERE'

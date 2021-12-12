@@ -12,11 +12,20 @@ public class LanguageConfigSection {
     @Nullable
     private String nospam;
 
+    @Nullable
+    private String alreadylinked;
+
     public @Nullable String getTokenGrant() {
         return grant;
     }
 
+    @Nullable
     public String getNospam() {
         return nospam;
+    }
+
+    @Nullable
+    public String getAlreadylinked() {
+        return alreadylinked;
     }
 }

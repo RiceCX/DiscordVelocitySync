@@ -69,7 +69,7 @@ public class TokenHandler {
         AtomicBoolean isLinked = new AtomicBoolean(false);
         DatabaseManager.getSQLUtils().executeQuery("SELECT * FROM linked_users WHERE uuid = ?", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
             if(rs.next()) {
-                logger.info("User " + uuid.toString() + " is already linked to a Discord account.");
+                logger.info("User {} ({}) is already linked to a Discord account.", uuid, getUsername(uuid));
                 isLinked.set(true);
             } else {
                 isLinked.set(false);
@@ -78,7 +78,7 @@ public class TokenHandler {
         });
 
         if(isLinked.get()) return TokenError.ALREADY_LINKED;
-        if(!tokenCache.asMap().containsValue(uuid)) return TokenError.TOKEN_ACTIVE;
+        if(tokenCache.asMap().containsValue(uuid)) return TokenError.TOKEN_ACTIVE;
 
         return null;
     }
