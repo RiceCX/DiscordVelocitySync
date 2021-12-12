@@ -11,6 +11,10 @@ import network.insurgence.velocitydiscordsync.commands.LinkCommand;
 import network.insurgence.velocitydiscordsync.commands.ReloadCommand;
 import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.AbstractCommand;
+import network.insurgence.velocitydiscordsync.database.DatabaseManager;
+import network.insurgence.velocitydiscordsync.database.HikariAuthentication;
+import network.insurgence.velocitydiscordsync.database.SQLTypes;
+import network.insurgence.velocitydiscordsync.migrations.DefaultMigration;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -33,6 +37,8 @@ public class VelocityDiscordSync {
 
     public static Path dataDirectory;
 
+    private DatabaseManager databaseManager;
+
     @Inject
     public VelocityDiscordSync(@DataDirectory Path dataDirectory) {
         instance = this;
@@ -41,11 +47,28 @@ public class VelocityDiscordSync {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        registerDatabase();
         new SyncBot(Config.get().getDiscordSection().getToken());
         registerCommands();
         logger.info("VelocityDiscordSync has been enabled!");
     }
 
+
+    private void registerDatabase() {
+        databaseManager = new DatabaseManager(SQLTypes.MYSQL, getDatabaseCredentials());
+
+        new DefaultMigration().migrate();
+
+    }
+
+    private HikariAuthentication getDatabaseCredentials() {
+        return new HikariAuthentication(
+                Config.get().getDatabaseSection().getUser(),
+                Config.get().getDatabaseSection().getPassword(),
+                Config.get().getDatabaseSection().getHost(),
+                Config.get().getDatabaseSection().getDatabase()
+        );
+    }
 
     private void registerCommands() {
         registerCommand(new LinkCommand());
@@ -68,5 +91,9 @@ public class VelocityDiscordSync {
 
     public static Logger getLogger() {
         return instance.logger;
+    }
+
+    public static DatabaseManager getDatabaseManager() {
+        return instance.databaseManager;
     }
 }

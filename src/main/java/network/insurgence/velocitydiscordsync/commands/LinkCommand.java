@@ -9,6 +9,8 @@ import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.AbstractCommand;
 import network.insurgence.velocitydiscordsync.core.TokenHandler;
 
+import java.util.Objects;
+
 public class LinkCommand extends AbstractCommand {
 
     /**
@@ -18,20 +20,24 @@ public class LinkCommand extends AbstractCommand {
     @Override
     public void execute(Invocation invocation) {
         if (invocation.source() instanceof Player player) {
-            if (!TokenHandler.canGenerate(player.getUniqueId())) {
+            TokenHandler.TokenError canGen = TokenHandler.canGenerate(player.getUniqueId());
+            if (canGen != null) {
                 String nospamLang = Config.get().getLang().getNospam();
-                if (nospamLang == null) nospamLang = "&cYou can only get one code every &210&c minutes!";
+                if(canGen == TokenHandler.TokenError.ALREADY_LINKED) {
+                    if (nospamLang == null) nospamLang = "&cYou are already linked with an account!";
+                } else {
+                    if (nospamLang == null) nospamLang = "&cYou can only get one code every &210&c minutes!";
+                }
+
                 TextComponent nospamComp = LegacyComponentSerializer.legacy('&').deserialize(nospamLang);
                 player.sendMessage(nospamComp);
                 return;
             }
             String tokenLang = Config.get().getLang().getTokenGrant();
-            String token = TokenHandler.generatePIN(player.getUniqueId());
+            String token = Objects.requireNonNull(TokenHandler.generate(player.getUniqueId())).getToken();
             String tokenMessage;
-            if (tokenLang != null)
-                tokenMessage = tokenLang.replace("{code}", token);
-            else
-                tokenMessage = "&aYour code is &2&n{code}&a send this in the verification channel! &7(/discord)".replace("{code}", token);
+
+            tokenMessage = Objects.requireNonNullElse(tokenLang, "&aYour code is &2&n{code}&a send this in the verification channel! &7(/discord)").replace("{code}", token);
 
             TextComponent txtComponent = LegacyComponentSerializer.legacy('&').deserialize(tokenMessage);
             player.sendMessage(txtComponent);

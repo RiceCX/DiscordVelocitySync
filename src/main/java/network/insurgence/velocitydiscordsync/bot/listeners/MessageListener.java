@@ -2,11 +2,13 @@ package network.insurgence.velocitydiscordsync.bot.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
+import network.insurgence.velocitydiscordsync.core.Token;
 import network.insurgence.velocitydiscordsync.core.TokenHandler;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -14,7 +16,6 @@ import org.slf4j.Logger;
 import java.awt.*;
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 public class MessageListener extends ListenerAdapter {
 
@@ -22,21 +23,23 @@ public class MessageListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        UUID uuid = TokenHandler.tokenCache.getIfPresent(event.getMessage().getContentRaw());
-        if (uuid != null) {
-            Optional<Player> player = VelocityDiscordSync.getInstance().getServer().getPlayer(uuid);
-            String IGN = player.isPresent() ? player.get().getUsername() : "N/A";
-            event.getChannel().sendMessageEmbeds(generateEmbed(IGN)).queue();
+        String message = event.getMessage().getContentRaw();
+        Optional<Token> tokenOptional = TokenHandler.fromString(message);
+        if (tokenOptional.isPresent()) {
+            String IGN = TokenHandler.getUsername(tokenOptional.get().getUuid());
+            TokenHandler.linkToken(tokenOptional.get(), event.getAuthor().getId());
+            if(event.getMember() != null)
+                renameMember(event.getMember(), IGN);
 
-            TokenHandler.tokenCache.invalidate(event.getMessage().getContentRaw());
-            // Rename the member that sent the message
-            if (player.isPresent() && event.getMember() != null) {
-                try {
-                    event.getMember().modifyNickname(String.format(event.getMember().getEffectiveName() + " [%s]", IGN)).queue();
-                } catch (InsufficientPermissionException e) {
-                    logger.error("Could not rename member to due lack of permissions: " + e.getPermission());
-                }
-            }
+            event.getChannel().sendMessageEmbeds(generateEmbed(IGN)).queue();
+        }
+    }
+
+    private void renameMember(@NotNull Member member, String IGN) {
+        try {
+            member.modifyNickname(String.format(member.getEffectiveName() + " [%s]", IGN)).queue();
+        } catch (InsufficientPermissionException e) {
+            logger.error("Could not rename member to due lack of permissions: " + e.getPermission());
         }
     }
 

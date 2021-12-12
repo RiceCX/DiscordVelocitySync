@@ -1,5 +1,6 @@
 package network.insurgence.velocitydiscordsync.config.configurations;
 
+import network.insurgence.velocitydiscordsync.config.configurations.sections.DatabaseSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DiscordConfigSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.LanguageConfigSection;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -14,6 +15,8 @@ public class MainConfig {
     @Comment("Language shit")
     private LanguageConfigSection lang;
 
+    private DatabaseSection database;
+
 
     public LanguageConfigSection getLang() {
         return lang;
@@ -22,4 +25,6 @@ public class MainConfig {
     public DiscordConfigSection getDiscordSection() {
         return discord;
     }
+
+    public DatabaseSection getDatabaseSection() { return database; }
 }
