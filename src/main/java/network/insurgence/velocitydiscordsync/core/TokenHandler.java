@@ -14,8 +14,6 @@ public class TokenHandler {
      */
     public static Cache<String, UUID> tokenCache = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).maximumSize(1000).build();
 
-
-
     public static String generatePIN(UUID uuid) {
         String token = String.format("%04d", ThreadLocalRandom.current().nextInt(10000));
 

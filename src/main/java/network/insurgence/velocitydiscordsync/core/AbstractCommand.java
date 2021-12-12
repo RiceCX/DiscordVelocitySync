@@ -9,5 +9,6 @@ public abstract class AbstractCommand implements SimpleCommand {
     protected CommandMeta.Builder getBuilder(String alias) {
         return VelocityDiscordSync.getInstance().getServer().getCommandManager().metaBuilder(alias);
     }
+
     public abstract CommandMeta getMeta();
 }

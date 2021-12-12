@@ -7,11 +7,12 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @ConfigSerializable
 public class DiscordConfigSection {
 
-
     @Comment("The Discord Bot token, KEEP THIS PRIVATE!")
-    @Nullable private String token;
+    @Nullable
+    private String token;
 
-    @Nullable private String channel;
+    @Nullable
+    private String channel;
 
     public @Nullable String getToken() {
         return token;

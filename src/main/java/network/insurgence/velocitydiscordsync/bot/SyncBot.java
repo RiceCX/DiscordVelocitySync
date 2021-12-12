@@ -24,7 +24,7 @@ public class SyncBot {
 
         jda = login(builder);
         instance = jda;
-        if(jda != null) registerEvents();
+        if (jda != null) registerEvents();
     }
 
     private void registerEvents() {
@@ -34,6 +34,7 @@ public class SyncBot {
 
     /**
      * Attempts to login to the JDA instance.
+     *
      * @param builder The JDABuilder instance to login with.
      * @return The Bot instance.
      */

@@ -2,15 +2,11 @@ package network.insurgence.velocitydiscordsync.bot.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
-import network.insurgence.velocitydiscordsync.bot.SyncBot;
-import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.TokenHandler;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

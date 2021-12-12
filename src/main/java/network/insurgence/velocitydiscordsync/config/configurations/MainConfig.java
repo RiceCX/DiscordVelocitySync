@@ -11,7 +11,6 @@ public class MainConfig {
     @Comment("Configuration for Discord related settings")
     private DiscordConfigSection discord;
 
-
     @Comment("Language shit")
     private LanguageConfigSection lang;
 

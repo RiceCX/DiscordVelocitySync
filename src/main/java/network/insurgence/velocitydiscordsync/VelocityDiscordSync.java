@@ -23,7 +23,6 @@ import java.nio.file.Path;
 )
 public class VelocityDiscordSync {
 
-
     private static VelocityDiscordSync instance = null;
 
     @Inject
@@ -53,7 +52,7 @@ public class VelocityDiscordSync {
         registerCommand(new ReloadCommand());
     }
 
-    private void registerCommand(AbstractCommand ...commands) {
+    private void registerCommand(AbstractCommand... commands) {
         for (AbstractCommand command : commands) {
             server.getCommandManager().register(command.getMeta(), command);
         }
