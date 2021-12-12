@@ -8,6 +8,7 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import network.insurgence.velocitydiscordsync.bot.SyncBot;
 import network.insurgence.velocitydiscordsync.commands.LinkCommand;
+import network.insurgence.velocitydiscordsync.commands.ReloadCommand;
 import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.AbstractCommand;
 import org.slf4j.Logger;
@@ -49,6 +50,7 @@ public class VelocityDiscordSync {
 
     private void registerCommands() {
         registerCommand(new LinkCommand());
+        registerCommand(new ReloadCommand());
     }
 
     private void registerCommand(AbstractCommand ...commands) {

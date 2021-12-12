@@ -17,7 +17,6 @@ public class LinkCommand extends AbstractCommand {
 
     @Override
     public void execute(Invocation invocation) {
-
         if(invocation.source() instanceof Player player) {
             if(!TokenHandler.canGenerate(player.getUniqueId())) {
                 String nospamLang = Config.get().getLang().getNospam();

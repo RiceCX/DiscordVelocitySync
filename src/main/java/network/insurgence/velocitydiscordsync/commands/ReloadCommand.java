@@ -17,6 +17,6 @@ public class ReloadCommand extends AbstractCommand {
 
     @Override
     public CommandMeta getMeta() {
-        return getBuilder("reload").build();
+        return getBuilder("linkreload").build();
     }
 }
