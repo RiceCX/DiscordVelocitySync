@@ -27,7 +27,7 @@ jobs:
       - name: Upload Artifacts to Github
         uses: actions/upload-artifact@v1
         with:
-          name: ${{ github.repository }}
+          name: DiscordVelocitySync
           path: staging
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
