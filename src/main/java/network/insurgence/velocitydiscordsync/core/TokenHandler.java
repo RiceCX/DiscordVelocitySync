@@ -2,6 +2,7 @@ package network.insurgence.velocitydiscordsync.core;
 
 import com.google.common.cache.*;
 import com.velocitypowered.api.proxy.Player;
+import network.insurgence.velocitydiscordayncapi.DiscordLinkEvent;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
 import network.insurgence.velocitydiscordsync.database.DatabaseManager;
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +63,8 @@ public class TokenHandler {
             ps.setString(4, String.valueOf(snowflake));
         });
 
+        Optional<Player> player = VelocityDiscordSync.getInstance().getServer().getPlayer(token.getUuid());
+        VelocityDiscordSync.getInstance().getServer().getEventManager().fireAndForget(new DiscordLinkEvent(token, snowflake, player.orElse(null)));
         tokenCache.invalidate(token);
     }
 
