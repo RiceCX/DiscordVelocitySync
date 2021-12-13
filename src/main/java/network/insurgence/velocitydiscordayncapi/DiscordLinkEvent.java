@@ -1,7 +1,7 @@
 package network.insurgence.velocitydiscordayncapi;
 
 import com.velocitypowered.api.proxy.Player;
-import network.insurgence.velocitydiscordsync.core.Token;
+import network.insurgence.velocitydiscordayncapi.token.Token;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package network.insurgence.velocitydiscordsync.core;
+package network.insurgence.velocitydiscordayncapi.token;
 
 /**
  * Represents the state of a token.

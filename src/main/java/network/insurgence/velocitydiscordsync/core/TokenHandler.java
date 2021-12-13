@@ -3,6 +3,7 @@ package network.insurgence.velocitydiscordsync.core;
 import com.google.common.cache.*;
 import com.velocitypowered.api.proxy.Player;
 import network.insurgence.velocitydiscordayncapi.DiscordLinkEvent;
+import network.insurgence.velocitydiscordayncapi.token.Token;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
 import network.insurgence.velocitydiscordsync.database.DatabaseManager;
 import org.jetbrains.annotations.NotNull;

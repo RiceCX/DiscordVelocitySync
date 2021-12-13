@@ -1,4 +1,4 @@
-package network.insurgence.velocitydiscordsync.core;
+package network.insurgence.velocitydiscordayncapi.token;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;

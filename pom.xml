@@ -173,6 +173,13 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/RiceCX/DiscordVelocitySync</url>
+        </repository>
+    </distributionManagement>
     <pluginRepositories>
         <pluginRepository>
             <id>maven-snapshots</id>

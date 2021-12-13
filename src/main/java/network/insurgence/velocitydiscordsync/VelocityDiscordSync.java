@@ -93,7 +93,4 @@ public class VelocityDiscordSync {
         return instance.logger;
     }
 
-    public static DatabaseManager getDatabaseManager() {
-        return instance.databaseManager;
-    }
 }
