@@ -4,7 +4,6 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * Represents a token used to authenticate with between Minecraft and Discord.
  */

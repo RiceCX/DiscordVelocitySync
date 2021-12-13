@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-
 /**
  * This event is called when a player links their account successfully to Discord.
  */

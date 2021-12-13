@@ -7,7 +7,6 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 @ConfigSerializable
 public class DatabaseSection {
 
-
     @Comment("The user of the database")
     @Nullable
     private String user;
