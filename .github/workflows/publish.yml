@@ -23,11 +23,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build project with Maven
         run: mvn -B package --file pom.xml
-      - run: mkdir -p ${{ env.GITHUB_WORKSPACE }}/target/releases
+      - run: mkdir staging && cp target/*.jar staging/
       - name: Upload Artifacts to Github
         uses: actions/upload-artifact@v1
         with:
           name: '{{ github.repository }}'
-          path: target/releases
+          path: staging
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
