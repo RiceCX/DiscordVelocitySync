@@ -44,12 +44,10 @@ public class MessageListener extends ListenerAdapter {
 
     private MessageEmbed generateEmbed(String IGN) {
         EmbedBuilder builder = new EmbedBuilder()
-                .setTitle("Discord Sync", "https://junglerealms.com")
-                .setAuthor("JungleRealms Proxy", "https://i.imgur.com/Mnv0nmT.png", "https://i.imgur.com/Mnv0nmT.png")
+                .setTitle("Your Discord account has been linked to Minecraft.", "https://junglerealms.com")
                 .setColor(Color.decode("#11ff00"))
-                .setDescription(String.format("You have successfully linked to **%s**", IGN))
+                .setDescription(String.format(":white_check_mark: You have successfully linked to **%s**", IGN))
                 .setFooter("JungleRealms", "https://i.imgur.com/Mnv0nmT.png")
-                .setThumbnail("https://i.imgur.com/Mnv0nmT.png")
                 .setTimestamp(Instant.now());
 
         return builder.build();
