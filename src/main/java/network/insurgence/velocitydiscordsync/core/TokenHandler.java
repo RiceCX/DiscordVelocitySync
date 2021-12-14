@@ -19,10 +19,11 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Handles the token cache and database.
  * <p>
- *     This class is thread-safe.
- *     This class is not intended to be instantiated.
- *     This class is not intended to be extended.
+ * This class is thread-safe.
+ * This class is not intended to be instantiated.
+ * This class is not intended to be extended.
  * </p>
+ *
  * @author RiceCX
  */
 public class TokenHandler {
@@ -38,11 +39,12 @@ public class TokenHandler {
     /**
      * Generates a new token for the given UUID.
      * This will also add the token to the cache.
+     *
      * @param uuid The UUID of the player.
      * @return The generated token.
      */
     public static Token generate(UUID uuid) {
-        if(canGenerate(uuid) != null) return null;
+        if (canGenerate(uuid) != null) return null;
 
         Token token = Token.generate(uuid);
         tokenCache.put(token, uuid);
@@ -54,7 +56,7 @@ public class TokenHandler {
 
         Optional<Player> player = VelocityDiscordSync.getInstance().getServer().getPlayer(uuid);
 
-        if(player.isPresent())
+        if (player.isPresent())
             ign = player.get().getUsername();
         else ign = "N/A";
 
@@ -63,7 +65,8 @@ public class TokenHandler {
 
     /**
      * Links the given token to the given UUID and saves it to the database.
-     * @param token The token to link.
+     *
+     * @param token     The token to link.
      * @param snowflake The Discord snowflake of the player.
      */
     public static void linkToken(Token token, String snowflake) {
@@ -81,6 +84,7 @@ public class TokenHandler {
 
     /**
      * Unlinks the given uuid from Discord through the database.
+     *
      * @param uuid The UUID of the player.
      * @return {@link UnlinkResult} result of the unlink.
      */
@@ -88,17 +92,16 @@ public class TokenHandler {
         String username = getUsername(uuid);
         AtomicReference<UnlinkResult> result = new AtomicReference<>(UnlinkResult.UNLINK_FAILED);
 
-        DatabaseManager.getSQLUtils().executeQuery("DELETE FROM linked_users WHERE uuid = ? RETURNING *", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
-            if(rs.next()) {
-                result.set(UnlinkResult.SUCCESS);
-                logger.info("User {} ({}) has been unlinked from Discord.", username, uuid);
-            } else {
-                result.set(UnlinkResult.NOT_LINKED);
-                logger.warn("User {} ({}) was not found in the database.", username, uuid);
-            }
+        int affected = DatabaseManager.getSQLUtils().executeUpdate("DELETE FROM linked_users WHERE uuid = ?", (ps) -> ps.setString(1, uuid.toString()));
 
-            return rs;
-        });
+        if (affected > 0) {
+            result.set(UnlinkResult.SUCCESS);
+            logger.info("User {} ({}) has been unlinked from Discord.", username, uuid);
+        } else {
+            result.set(UnlinkResult.NOT_LINKED);
+            logger.warn("User {} ({}) was not found in the database.", username, uuid);
+
+        }
 
         return result.get();
     }
@@ -106,7 +109,7 @@ public class TokenHandler {
     public static TokenError canGenerate(UUID uuid) {
         AtomicBoolean isLinked = new AtomicBoolean(false);
         DatabaseManager.getSQLUtils().executeQuery("SELECT * FROM linked_users WHERE uuid = ?", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
-            if(rs.next()) {
+            if (rs.next()) {
                 logger.info("User {} ({}) is already linked to a Discord account.", uuid, getUsername(uuid));
                 isLinked.set(true);
             } else {
@@ -115,8 +118,8 @@ public class TokenHandler {
             return rs;
         });
 
-        if(isLinked.get()) return TokenError.ALREADY_LINKED;
-        if(tokenCache.asMap().containsValue(uuid)) return TokenError.TOKEN_ACTIVE;
+        if (isLinked.get()) return TokenError.ALREADY_LINKED;
+        if (tokenCache.asMap().containsValue(uuid)) return TokenError.TOKEN_ACTIVE;
 
         return null;
     }
@@ -134,7 +137,7 @@ public class TokenHandler {
 
     public static Optional<Token> fromString(String token) {
         for (Token tokens : tokenCache.asMap().keySet()) {
-            if(tokens.getToken().equalsIgnoreCase(token))
+            if (tokens.getToken().equalsIgnoreCase(token))
                 return Optional.of(tokens);
         }
 
