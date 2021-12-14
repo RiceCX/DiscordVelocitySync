@@ -9,6 +9,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import network.insurgence.velocitydiscordsync.bot.SyncBot;
 import network.insurgence.velocitydiscordsync.commands.LinkCommand;
 import network.insurgence.velocitydiscordsync.commands.ReloadCommand;
+import network.insurgence.velocitydiscordsync.commands.UnlinkCommand;
 import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.AbstractCommand;
 import network.insurgence.velocitydiscordsync.database.DatabaseManager;
@@ -71,8 +72,11 @@ public class VelocityDiscordSync {
     }
 
     private void registerCommands() {
-        registerCommand(new LinkCommand());
-        registerCommand(new ReloadCommand());
+        registerCommand(
+                new LinkCommand(),
+                new ReloadCommand(),
+                new UnlinkCommand()
+        );
     }
 
     private void registerCommand(AbstractCommand... commands) {

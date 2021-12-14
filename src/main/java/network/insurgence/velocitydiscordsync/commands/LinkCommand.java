@@ -28,10 +28,10 @@ public class LinkCommand extends AbstractCommand {
                     if(Config.get().getLang().getAlreadylinked() != null)
                         errorMessage = Config.get().getLang().getAlreadylinked();
                 } else {
-
                     if(Config.get().getLang().getNospam() != null) errorMessage = Config.get().getLang().getNospam();
                 }
-                // I dont get why this should be here...
+
+                // I don't get why this should be here...
                 if(errorMessage == null) errorMessage = "&cYou can only get one code every &210&c minutes!";
 
                 TextComponent errorComponent = LegacyComponentSerializer.legacy('&').deserialize(errorMessage);

@@ -14,7 +14,17 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Handles the token cache and database.
+ * <p>
+ *     This class is thread-safe.
+ *     This class is not intended to be instantiated.
+ *     This class is not intended to be extended.
+ * </p>
+ * @author RiceCX
+ */
 public class TokenHandler {
 
 
@@ -69,6 +79,30 @@ public class TokenHandler {
         tokenCache.invalidate(token);
     }
 
+    /**
+     * Unlinks the given uuid from Discord through the database.
+     * @param uuid The UUID of the player.
+     * @return {@link UnlinkResult} result of the unlink.
+     */
+    public static UnlinkResult unlinkToken(UUID uuid) {
+        String username = getUsername(uuid);
+        AtomicReference<UnlinkResult> result = new AtomicReference<>(UnlinkResult.UNLINK_FAILED);
+
+        DatabaseManager.getSQLUtils().executeQuery("DELETE FROM linked_users WHERE uuid = ? RETURNING *", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
+            if(rs.next()) {
+                result.set(UnlinkResult.SUCCESS);
+                logger.info("User {} ({}) has been unlinked from Discord.", username, uuid);
+            } else {
+                result.set(UnlinkResult.NOT_LINKED);
+                logger.warn("User {} ({}) was not found in the database.", username, uuid);
+            }
+
+            return rs;
+        });
+
+        return result.get();
+    }
+
     public static TokenError canGenerate(UUID uuid) {
         AtomicBoolean isLinked = new AtomicBoolean(false);
         DatabaseManager.getSQLUtils().executeQuery("SELECT * FROM linked_users WHERE uuid = ?", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
@@ -105,6 +139,13 @@ public class TokenHandler {
         }
 
         return Optional.empty();
+    }
+
+
+    public enum UnlinkResult {
+        SUCCESS,
+        NOT_LINKED,
+        UNLINK_FAILED
     }
 
     public enum TokenError {
