@@ -8,15 +8,20 @@ import network.insurgence.velocitydiscordsync.core.TokenHandler;
 
 public class UnlinkCommand extends AbstractCommand {
 
+    /**
+     * Unlinking with a command.
+     */
+
     @Override
     public void execute(Invocation invocation) {
         if(invocation.source() instanceof Player player) {
             TokenHandler.UnlinkResult result = TokenHandler.unlinkToken(player.getUniqueId());
 
             switch (result) {
-                case SUCCESS -> invocation.source().sendMessage(Component.text("Unlinked!"));
-                case NOT_LINKED -> invocation.source().sendMessage(Component.text("You are not linked!"));
-                default -> invocation.source().sendMessage(Component.text("Unlink failed!"));
+                // Did the messages in a lazy way, maybe make it configurable in future.
+                case SUCCESS -> invocation.source().sendMessage(Component.text("§aYour account has been unlinked!"));
+                case NOT_LINKED -> invocation.source().sendMessage(Component.text("§aYou are not linked!"));
+                default -> invocation.source().sendMessage(Component.text("§cUnlink failed, please contact server administration."));
             }
         }
     }
