@@ -51,6 +51,11 @@ public class TokenHandler {
         return token;
     }
 
+    /**
+     * Gets the username of the given UUID.
+     * @param uuid The UUID of the player.
+     * @return The username of the player or N/A if not found.
+     */
     public static String getUsername(UUID uuid) {
         String ign;
 

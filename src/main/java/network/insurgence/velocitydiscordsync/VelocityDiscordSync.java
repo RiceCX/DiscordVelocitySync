@@ -3,6 +3,7 @@ package network.insurgence.velocitydiscordsync;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -24,7 +25,10 @@ import java.nio.file.Path;
         id = "velocitydiscordsync",
         name = "VelocityDiscordSync",
         version = "1.0-SNAPSHOT",
-        authors = {"RiceCX", "Pace1337"}
+        authors = {"RiceCX", "Pace1337"},
+        dependencies = {
+                @Dependency(id = "luckperms", optional = true)
+        }
 )
 public class VelocityDiscordSync {
 

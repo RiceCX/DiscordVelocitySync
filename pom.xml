@@ -159,11 +159,16 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.spongepowered</pattern>
-                                    <shadedPattern>network.insurgence.velocitydiscordsync.shaded.spongepowered</shadedPattern>
+                                    <shadedPattern>network.insurgence.velocitydiscordsync.shaded.spongepowered
+                                    </shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>net.dv8tion</pattern>
                                     <shadedPattern>network.insurgence.velocitydiscordsync.shaded.dv8tion</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.zaxxer</pattern>
+                                    <shadedPattern>network.insurgence.velocitydiscordsync.shaded.zaxxer</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -200,6 +205,13 @@
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
             <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- LuckPerms -->
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.3</version>
             <scope>provided</scope>
         </dependency>
         <!-- JDA -->

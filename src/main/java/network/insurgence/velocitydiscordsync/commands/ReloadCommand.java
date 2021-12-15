@@ -18,6 +18,11 @@ public class ReloadCommand extends AbstractCommand {
     }
 
     @Override
+    public boolean hasPermission(Invocation invocation) {
+        return super.hasPermission(invocation);
+    }
+
+    @Override
     public CommandMeta getMeta() {
         return getBuilder("linkreload").build();
     }
