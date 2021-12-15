@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * @author RiceCX
+ * Wrapper class for the LuckPerms API
  */
 public class LPAPI {
 
@@ -25,6 +26,8 @@ public class LPAPI {
     }
 
     public Optional<User> getUser(UUID uuid) {
+        if(api == null) return Optional.empty();
+
         return Optional.ofNullable(api.getUserManager().getUser(uuid));
     }
 
