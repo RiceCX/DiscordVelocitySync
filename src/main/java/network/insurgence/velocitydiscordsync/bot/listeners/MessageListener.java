@@ -1,6 +1,7 @@
 package network.insurgence.velocitydiscordsync.bot.listeners;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -22,6 +23,10 @@ public class MessageListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()
+                || !event.getMessage().getChannelType().equals(ChannelType.TEXT)) {
+            return;
+        }
         String message = event.getMessage().getContentRaw();
         Optional<Token> tokenOptional = TokenHandler.fromString(message);
         if (tokenOptional.isPresent()) {

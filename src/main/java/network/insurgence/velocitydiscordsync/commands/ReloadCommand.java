@@ -14,7 +14,7 @@ public class ReloadCommand extends AbstractCommand {
     @Override
     public void execute(Invocation invocation) {
         Config.getInstance().reloadConfig();
-        invocation.source().sendMessage(Component.text("&bYou have reloaded the config."));
+        invocation.source().sendMessage(Component.text("§bYou have reloaded the config."));
     }
 
     @Override
