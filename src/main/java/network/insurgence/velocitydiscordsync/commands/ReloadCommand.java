@@ -19,7 +19,7 @@ public class ReloadCommand extends AbstractCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return super.hasPermission(invocation);
+        return invocation.source().hasPermission("velocitydiscordsync.reload");
     }
 
     @Override
