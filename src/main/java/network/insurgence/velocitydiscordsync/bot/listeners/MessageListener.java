@@ -38,7 +38,9 @@ public class MessageListener extends ListenerAdapter {
             event.getChannel().sendMessageEmbeds(generateEmbed(IGN)).queue();
         } else {
             // Invalid token, just delete their message.
-            event.getMessage().delete().queue();
+            if (event.getChannel().getId().equals("919340777560232007")) {
+                event.getMessage().delete().queue();
+            }
         }
     }
 
