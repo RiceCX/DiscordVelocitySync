@@ -5,8 +5,6 @@ import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
 import org.slf4j.Logger;
 
 import java.io.Closeable;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class DatabaseManager implements Closeable {
 
@@ -23,22 +21,8 @@ public class DatabaseManager implements Closeable {
                 auth, type.getPort()
         ));
 
-        SQLUtils.setConnection(getConnection());
+        SQLUtils.setDataSource(dataSource);
         logger.info("Connected to " + type.name() + "!");
-    }
-
-    public Connection getConnection() {
-        if (isClosed())
-            throw new IllegalStateException("Connection is not open.");
-
-        try {
-
-            return dataSource.getConnection();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

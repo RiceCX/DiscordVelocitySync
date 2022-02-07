@@ -1,6 +1,7 @@
 
 
 discord:
+  guildId: 'YOUR_GUILD_ID'
   token: 'PUT_TOKEN_HERE'
   channel: 'PUT_CHANNEL_ID_HERE'
 

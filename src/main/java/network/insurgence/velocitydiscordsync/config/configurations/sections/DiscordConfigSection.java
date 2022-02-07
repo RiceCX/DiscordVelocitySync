@@ -12,10 +12,17 @@ public class DiscordConfigSection {
     private String token;
 
     @Nullable
+    private String guildId;
+
+    @Nullable
     private String channel;
 
     public @Nullable String getToken() {
         return token;
+    }
+
+    public @Nullable String getGuildId() {
+        return guildId;
     }
 
     public @Nullable String getTokenChannel() {

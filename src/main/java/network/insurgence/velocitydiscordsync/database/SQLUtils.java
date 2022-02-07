@@ -2,6 +2,7 @@ package network.insurgence.velocitydiscordsync.database;
 
 import org.intellij.lang.annotations.Language;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
  */
 public class SQLUtils {
 
-    private static Connection connection;
+    private static DataSource dataSource;
 
     /**
      * Execute an SQL query with a result set and prepared statement
@@ -91,9 +92,9 @@ public class SQLUtils {
     }
 
     private <T> T wrapException(@Language("SQL") String sql, ThrowingFunction<PreparedStatement, T, SQLException> operation) {
-        if (connection == null)
+        if (dataSource == null)
             throw new IllegalStateException("SqlUtils Connection is null! make sure to call SQLUtils.setConnection(<Connection>);");
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(sql)) {
             return operation.apply(statement);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -120,8 +121,8 @@ public class SQLUtils {
         R apply(T input) throws E;
     }
 
-    public static void setConnection(Connection connection) {
-        SQLUtils.connection = connection;
+    public static void setDataSource(DataSource dataSource) {
+        SQLUtils.dataSource = dataSource;
     }
 }
 

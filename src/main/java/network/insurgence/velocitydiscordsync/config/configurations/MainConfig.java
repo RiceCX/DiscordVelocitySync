@@ -3,6 +3,7 @@ package network.insurgence.velocitydiscordsync.config.configurations;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DatabaseSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DiscordConfigSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.LanguageConfigSection;
+import network.insurgence.velocitydiscordsync.config.configurations.sections.RoleConfigSection;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 
@@ -17,6 +18,8 @@ public class MainConfig {
 
     private DatabaseSection database;
 
+    private RoleConfigSection role;
+
 
     public LanguageConfigSection getLang() {
         return lang;
@@ -27,4 +30,8 @@ public class MainConfig {
     }
 
     public DatabaseSection getDatabaseSection() { return database; }
+
+    public RoleConfigSection getRole() {
+        return role;
+    }
 }

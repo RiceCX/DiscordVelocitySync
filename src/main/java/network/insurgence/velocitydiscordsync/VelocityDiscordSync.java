@@ -13,9 +13,11 @@ import network.insurgence.velocitydiscordsync.commands.ReloadCommand;
 import network.insurgence.velocitydiscordsync.commands.UnlinkCommand;
 import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.AbstractCommand;
+import network.insurgence.velocitydiscordsync.core.RoleHandler;
 import network.insurgence.velocitydiscordsync.database.DatabaseManager;
 import network.insurgence.velocitydiscordsync.database.HikariAuthentication;
 import network.insurgence.velocitydiscordsync.database.SQLTypes;
+import network.insurgence.velocitydiscordsync.luckperms.LPAPI;
 import network.insurgence.velocitydiscordsync.migrations.DefaultMigration;
 import org.slf4j.Logger;
 
@@ -44,6 +46,8 @@ public class VelocityDiscordSync {
 
     private DatabaseManager databaseManager;
 
+    private RoleHandler roleHandler;
+
     @Inject
     public VelocityDiscordSync(@DataDirectory Path dataDirectory) {
         instance = this;
@@ -55,6 +59,8 @@ public class VelocityDiscordSync {
         registerDatabase();
         new SyncBot(Config.get().getDiscordSection().getToken());
         registerCommands();
+        this.getServer().getEventManager().register(this, new LPAPI());
+        roleHandler = new RoleHandler();
         logger.info("VelocityDiscordSync has been enabled!");
     }
 
@@ -101,4 +107,7 @@ public class VelocityDiscordSync {
         return instance.logger;
     }
 
+    public RoleHandler getRoleHandler() {
+        return roleHandler;
+    }
 }

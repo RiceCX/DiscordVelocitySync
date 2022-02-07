@@ -111,6 +111,12 @@ public class TokenHandler {
         return result.get();
     }
 
+    /**
+     * Returns whether if they can generate a uuid or not.
+     * Usually depending on if they exist in the db or not.
+     * @param uuid The UUID of the player.
+     * @return {@link TokenError} result of the check. Null if no error.
+     */
     public static TokenError canGenerate(UUID uuid) {
         AtomicBoolean isLinked = new AtomicBoolean(false);
         DatabaseManager.getSQLUtils().executeQuery("SELECT * FROM linked_users WHERE uuid = ?", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
