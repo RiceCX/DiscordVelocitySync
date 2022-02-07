@@ -5,6 +5,14 @@ discord:
   token: 'PUT_TOKEN_HERE'
   channel: 'PUT_CHANNEL_ID_HERE'
 
+
+#role:
+#  groupname:
+#    - 'YOUR_ROLE_ID'
+
+role:
+
+
 lang:
   grant: "&aYour code is &2&n{code}&a send this in the verification channel! &7(/discord)"
   nospam: "&cYou can only get one code every &210&c minutes!"

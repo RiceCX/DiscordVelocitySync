@@ -23,7 +23,7 @@ public class RoleHandler {
     }
 
     public List<Long> parseRoleIdFromGroupName(String groupName) {
-        return Config.get().getRole().getRoles().get(groupName);
+        return Config.get().getRoles().get(groupName);
     }
 
     public void giveRole(String snowflake, String groupName) {

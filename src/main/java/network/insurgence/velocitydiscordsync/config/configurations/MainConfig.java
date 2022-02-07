@@ -3,9 +3,13 @@ package network.insurgence.velocitydiscordsync.config.configurations;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DatabaseSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.DiscordConfigSection;
 import network.insurgence.velocitydiscordsync.config.configurations.sections.LanguageConfigSection;
-import network.insurgence.velocitydiscordsync.config.configurations.sections.RoleConfigSection;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ConfigSerializable
 public class MainConfig {
@@ -18,7 +22,7 @@ public class MainConfig {
 
     private DatabaseSection database;
 
-    private RoleConfigSection role;
+    private @NotNull Map<String, List<Long>> roles = new HashMap<>();
 
 
     public LanguageConfigSection getLang() {
@@ -31,7 +35,7 @@ public class MainConfig {
 
     public DatabaseSection getDatabaseSection() { return database; }
 
-    public RoleConfigSection getRole() {
-        return role;
+    public @NotNull Map<String, List<Long>> getRoles() {
+        return roles;
     }
 }
