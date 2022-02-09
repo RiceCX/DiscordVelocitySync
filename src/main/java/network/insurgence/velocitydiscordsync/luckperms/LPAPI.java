@@ -82,11 +82,15 @@ public class LPAPI {
 
             executorService.submit(
                     () -> DiscordHandler.getSnowflakeByUUID(playerUUID)
-                            .ifPresent(snowflake -> VelocityDiscordSync.getInstance().getRoleHandler().giveRole(snowflake, node.getGroupName()))
-            );
+                            .ifPresentOrElse(snowflake -> VelocityDiscordSync.getInstance().getRoleHandler().giveRole(snowflake, node.getGroupName()), this::reportErrorOnGroupAdd))
+            ;
         } catch (Exception e) {
             // Not a UUID.
         }
+    }
+
+    private void reportErrorOnGroupAdd() {
+        logger.warn("This user is not linked to Discord. Their role won't be synced.");
     }
 
 
