@@ -30,24 +30,29 @@ public class LPAPI {
     private final LuckPerms api;
 
     public LPAPI() {
-        this.api = LuckPermsProvider.get();
+        if(!isClassActive()) {
+            this.api = null;
+        } else this.api = LuckPermsProvider.get();
 
         checkApiExistence();
+
+        if(api != null) this.api.getEventBus().subscribe(VelocityDiscordSync.getInstance(), NodeAddEvent.class, this::onGroupAdd);
     }
 
     /**
      * This needs to be run async. Gets a user from the
      * specified identifier. This usually is a UUID.
+     *
      * @param identifier The identifier to get the user from.
      * @return The user, or null if not found.
      */
     public Optional<User> getUserFromIdentifier(String identifier) {
-        if(api == null) return Optional.empty();
+        if (api == null) return Optional.empty();
 
         User user = null;
         UUID uuid = null;
 
-        if(identifier.length() == 36) {
+        if (identifier.length() == 36) {
             try {
                 uuid = UUID.fromString(identifier);
             } catch (IllegalArgumentException e) {
@@ -57,7 +62,7 @@ public class LPAPI {
             uuid = api.getUserManager().lookupUniqueId(identifier).join();
         }
 
-        if(uuid != null) {
+        if (uuid != null) {
             user = api.getUserManager().getUser(uuid);
         }
 
@@ -65,10 +70,11 @@ public class LPAPI {
     }
 
     @Subscribe
-    public void onPermissionAdd(NodeAddEvent event) {
-        if(!(event.getNode() instanceof InheritanceNode node)) return;
-        if(!event.getTarget().getIdentifier().getType().equals(PermissionHolder.Identifier.USER_TYPE)) return;
+    public void onGroupAdd(NodeAddEvent event) {
+        if (!(event.getNode() instanceof InheritanceNode node)) return;
+        if (!event.getTarget().getIdentifier().getType().equals(PermissionHolder.Identifier.USER_TYPE)) return;
 
+        logger.info("User inherited group: " + event.getTarget().getIdentifier() + " -> " + node.getGroupName());
         String identifier = event.getTarget().getIdentifier().getName();
 
         try {
@@ -83,7 +89,18 @@ public class LPAPI {
         }
     }
 
+
+    private boolean isClassActive() {
+        try {
+            Class.forName("net.luckperms.api.LuckPermsProvider");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private void checkApiExistence() {
+
         if (api == null) {
             logger.warn("LuckPerms API not found! We will not be able to provide permissions!");
         }
