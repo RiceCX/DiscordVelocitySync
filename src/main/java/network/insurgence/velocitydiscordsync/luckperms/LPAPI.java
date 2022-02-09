@@ -5,15 +5,20 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.event.node.NodeAddEvent;
 import net.luckperms.api.model.PermissionHolder;
+import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.InheritanceNode;
-import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.query.QueryOptions;
+import network.insurgence.velocitydiscordayncapi.DiscordLinkEvent;
 import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
+import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.DiscordHandler;
-import network.insurgence.velocitydiscordsync.database.HikariUtils;
+import network.insurgence.velocitydiscordsync.core.RoleHandler;
 import org.slf4j.Logger;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -67,6 +72,26 @@ public class LPAPI {
         }
 
         return Optional.ofNullable(user);
+    }
+
+    @Subscribe
+    public void onDiscordLink(DiscordLinkEvent event) {
+
+        event.getPlayer().ifPresent(player -> {
+            UUID uuid = player.getUniqueId();
+            executorService.submit(() -> getUserFromIdentifier(uuid.toString()).ifPresent(luckUser -> {
+                Collection<Group> groupsUserIsIn = luckUser.getInheritedGroups(QueryOptions.nonContextual());
+
+                Set<String> rolesToCheck = Config.get().getRoles().keySet();
+
+                for (Group group : groupsUserIsIn) {
+                    if (rolesToCheck.contains(group.getName())) {
+                        VelocityDiscordSync.getInstance().getRoleHandler().giveRole(event.getSnowflake(), group.getName());
+                        break;
+                    }
+                }
+            }));
+        });
     }
 
     @Subscribe
