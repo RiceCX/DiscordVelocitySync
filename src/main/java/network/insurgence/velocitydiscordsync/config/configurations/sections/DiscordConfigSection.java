@@ -12,7 +12,7 @@ public class DiscordConfigSection {
     private String token;
 
     @Nullable
-    private String guildId;
+    private String guildid;
 
     @Nullable
     private String channel;
@@ -22,7 +22,7 @@ public class DiscordConfigSection {
     }
 
     public @Nullable String getGuildId() {
-        return guildId;
+        return guildid;
     }
 
     public @Nullable String getTokenChannel() {

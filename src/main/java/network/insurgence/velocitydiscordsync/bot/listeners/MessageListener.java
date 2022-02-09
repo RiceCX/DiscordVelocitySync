@@ -32,10 +32,12 @@ public class MessageListener extends ListenerAdapter {
         if (tokenOptional.isPresent()) {
             String IGN = TokenHandler.getUsername(tokenOptional.get().getUuid());
             TokenHandler.linkToken(tokenOptional.get(), event.getAuthor().getId());
-            if(event.getMember() != null)
+            if (event.getMember() != null)
                 renameMember(event.getMember(), IGN);
 
-            event.getChannel().sendMessageEmbeds(generateEmbed(IGN)).queue();
+            event.getChannel().sendMessageEmbeds(generateEmbed(IGN)).queue(
+                    msg -> logger.info("Successfully linked {} to {}", event.getAuthor().getAsTag(), tokenOptional.get().getUuid()),
+                    err -> logger.error("Could not send embed: " + err.getMessage()));
         } else {
             // Invalid token, just delete their message.
             if (event.getChannel().getId().equals("904755643221704735")) {
@@ -46,7 +48,7 @@ public class MessageListener extends ListenerAdapter {
 
     private void renameMember(@NotNull Member member, String IGN) {
         try {
-            member.modifyNickname(String.format(member.getEffectiveName() + " [%s]", IGN)).queue();
+            member.modifyNickname(IGN).queue();
         } catch (InsufficientPermissionException e) {
             logger.error("Could not rename member to due lack of permissions: " + e.getPermission());
         }

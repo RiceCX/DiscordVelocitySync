@@ -14,6 +14,7 @@ import network.insurgence.velocitydiscordsync.VelocityDiscordSync;
 import network.insurgence.velocitydiscordsync.config.Config;
 import network.insurgence.velocitydiscordsync.core.DiscordHandler;
 import network.insurgence.velocitydiscordsync.core.RoleHandler;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.Collection;
@@ -76,11 +77,12 @@ public class LPAPI {
 
     @Subscribe
     public void onDiscordLink(DiscordLinkEvent event) {
-
         event.getPlayer().ifPresent(player -> {
+            logger.info("Received DiscordLinkEvent for {} ({})", event.getPlayer().get().getUsername(), event.getSnowflake());
             UUID uuid = player.getUniqueId();
+
             executorService.submit(() -> getUserFromIdentifier(uuid.toString()).ifPresent(luckUser -> {
-                Collection<Group> groupsUserIsIn = luckUser.getInheritedGroups(QueryOptions.nonContextual());
+                Collection<Group> groupsUserIsIn = luckUser.getInheritedGroups(QueryOptions.defaultContextualOptions());
 
                 Set<String> rolesToCheck = Config.get().getRoles().keySet();
 
@@ -94,8 +96,11 @@ public class LPAPI {
         });
     }
 
-    @Subscribe
-    public void onGroupAdd(NodeAddEvent event) {
+    /**
+     * This only works on the proxy :thinking:
+     * @param event The event to check.
+     */
+    public void onGroupAdd(@NotNull NodeAddEvent event) {
         if (!(event.getNode() instanceof InheritanceNode node)) return;
         if (!event.getTarget().getIdentifier().getType().equals(PermissionHolder.Identifier.USER_TYPE)) return;
 
