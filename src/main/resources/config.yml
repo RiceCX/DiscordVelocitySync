@@ -10,7 +10,7 @@ discord:
 #  groupname:
 #    - 'YOUR_ROLE_ID'
 
-role:
+roles:
 
 
 lang:
