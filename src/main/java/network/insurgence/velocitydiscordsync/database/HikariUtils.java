@@ -10,7 +10,7 @@ public class HikariUtils {
         config.setUsername(authentication.username());
         config.setPassword(authentication.password());
         config.setJdbcUrl(generateURL(type.getDriverURL(), authentication.host(), type.getPort(), authentication.database()));
-        config.setConnectionTimeout(5000);
+        config.setConnectionTimeout(30_000); // 30s
         config.setMaximumPoolSize(20);
 
         return config;
