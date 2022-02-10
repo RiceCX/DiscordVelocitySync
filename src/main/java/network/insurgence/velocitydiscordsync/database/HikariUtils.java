@@ -11,7 +11,7 @@ public class HikariUtils {
         config.setPassword(authentication.password());
         config.setJdbcUrl(generateURL(type.getDriverURL(), authentication.host(), type.getPort(), authentication.database()));
         config.setConnectionTimeout(5000);
-        config.setMaximumPoolSize(10);
+        config.setMaximumPoolSize(20);
 
         return config;
     }
