@@ -115,9 +115,9 @@ public class TokenHandler {
      * Returns whether if they can generate a uuid or not.
      * Usually depending on if they exist in the db or not.
      * @param uuid The UUID of the player.
-     * @return {@link TokenError} result of the check. Null if no error.
+     * @return {@link TokenResult} result of the check. Null if no error.
      */
-    public static TokenError canGenerate(UUID uuid) {
+    public static TokenResult canGenerate(UUID uuid) {
         AtomicBoolean isLinked = new AtomicBoolean(false);
         DatabaseManager.getSQLUtils().executeQuery("SELECT * FROM linked_users WHERE uuid = ?", (ps) -> ps.setString(1, uuid.toString()), (rs) -> {
             if (rs.next()) {
@@ -129,12 +129,30 @@ public class TokenHandler {
             return rs;
         });
 
-        if (isLinked.get()) return TokenError.ALREADY_LINKED;
-        if (tokenCache.asMap().containsValue(uuid)) return TokenError.TOKEN_ACTIVE;
+        if (isLinked.get()) return TokenResult.ALREADY_LINKED;
+        if (tokenCache.asMap().containsValue(uuid)) return TokenResult.TOKEN_ACTIVE;
 
         return null;
     }
 
+    /**
+     * Returns a token from the provided string if it exists.
+     * @param token The token to check.
+     * @return The token if it exists. Empty if not.
+     */
+    public static Optional<Token> fromString(String token) {
+        for (Token tokens : tokenCache.asMap().keySet()) {
+            if (tokens.getToken().equalsIgnoreCase(token))
+                return Optional.of(tokens);
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * Class representing a listener that listens for
+     * any changes to the token cache.
+     */
     private static class TokenExpireHandler implements RemovalListener<Token, UUID> {
 
         @Override
@@ -146,15 +164,6 @@ public class TokenHandler {
         }
     }
 
-    public static Optional<Token> fromString(String token) {
-        for (Token tokens : tokenCache.asMap().keySet()) {
-            if (tokens.getToken().equalsIgnoreCase(token))
-                return Optional.of(tokens);
-        }
-
-        return Optional.empty();
-    }
-
 
     public enum UnlinkResult {
         SUCCESS,
@@ -162,7 +171,7 @@ public class TokenHandler {
         UNLINK_FAILED
     }
 
-    public enum TokenError {
+    public enum TokenResult {
         ALREADY_LINKED,
         TOKEN_ACTIVE
     }

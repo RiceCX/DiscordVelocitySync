@@ -20,11 +20,11 @@ public class LinkCommand extends AbstractCommand {
     @Override
     public void execute(Invocation invocation) {
         if (invocation.source() instanceof Player player) {
-            TokenHandler.TokenError canGen = TokenHandler.canGenerate(player.getUniqueId());
+            TokenHandler.TokenResult canGen = TokenHandler.canGenerate(player.getUniqueId());
             if (canGen != null) {
                 String errorMessage = "&cYou can only get one code every &210&c minutes!";
 
-                if(canGen == TokenHandler.TokenError.ALREADY_LINKED) {
+                if(canGen == TokenHandler.TokenResult.ALREADY_LINKED) {
                     if(Config.get().getLang().getAlreadylinked() != null)
                         errorMessage = Config.get().getLang().getAlreadylinked();
                 } else {
