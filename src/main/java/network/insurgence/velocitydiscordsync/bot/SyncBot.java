@@ -21,6 +21,11 @@ public class SyncBot {
         JDABuilder builder = JDABuilder.createDefault(token);
 
         builder.disableCache(CacheFlag.VOICE_STATE);
+        builder.disableCache(CacheFlag.ACTIVITY);
+        builder.disableCache(CacheFlag.CLIENT_STATUS);
+        builder.disableCache(CacheFlag.ROLE_TAGS);
+        builder.disableCache(CacheFlag.EMOTE);
+        builder.disableCache(CacheFlag.ONLINE_STATUS);
 
         jda = login(builder);
         instance = jda;

@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 
 public class ReadyListener extends ListenerAdapter {
 
-    private Logger logger = VelocityDiscordSync.getLogger();
+    private final Logger logger = VelocityDiscordSync.getLogger();
 
     @Override
     public void onReady(@NotNull ReadyEvent evt) {
